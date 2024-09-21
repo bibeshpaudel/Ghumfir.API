@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\Ghumfir.API.props" />
-</Project>
