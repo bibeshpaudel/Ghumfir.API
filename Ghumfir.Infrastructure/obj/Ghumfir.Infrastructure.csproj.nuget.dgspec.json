@@ -1,0 +1,218 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Infrastructure\\Ghumfir.Infrastructure.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Application\\Ghumfir.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Application\\Ghumfir.Application.csproj",
+        "projectName": "Ghumfir.Application",
+        "projectPath": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Application\\Ghumfir.Application.csproj",
+        "packagesPath": "C:\\Users\\adef6\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\adef6\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Domain\\Ghumfir.Domain.csproj": {
+                "projectPath": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Domain\\Ghumfir.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.10.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Domain\\Ghumfir.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Domain\\Ghumfir.Domain.csproj",
+        "projectName": "Ghumfir.Domain",
+        "projectPath": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Domain\\Ghumfir.Domain.csproj",
+        "packagesPath": "C:\\Users\\adef6\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\adef6\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Infrastructure\\Ghumfir.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Infrastructure\\Ghumfir.Infrastructure.csproj",
+        "projectName": "Ghumfir.Infrastructure",
+        "projectPath": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Infrastructure\\Ghumfir.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\adef6\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\adef6\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Application\\Ghumfir.Application.csproj": {
+                "projectPath": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Application\\Ghumfir.Application.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
