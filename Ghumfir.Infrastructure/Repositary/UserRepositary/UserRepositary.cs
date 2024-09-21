@@ -180,6 +180,16 @@ public class UserRepositary : IUser
         return ApiResponse<string?>.Success();
     }
 
+    public Task<ApiResult<ForgotPasswordResponse>> ForgotPassword(ForgotPasswordDto request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ApiResult<string?>> VerifyForgotPassword(VerifyForgotPasswordDto request)
+    {
+        throw new NotImplementedException();
+    }
+
     private ClaimsPrincipal? GetTokenPrincipal(string token)
     {
         var validation = new TokenValidationParameters

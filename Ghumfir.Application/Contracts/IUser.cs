@@ -9,4 +9,6 @@ public interface IUser
     Task<ApiResult<LoginResponse>> LoginUser(LoginDto request);
     Task<ApiResult<LoginResponse>> RefreshToken(RefreshTokenDto request);
     Task<ApiResult<string?>> ChangePassword(ChangePasswordDto request);
+    Task<ApiResult<ForgotPasswordResponse>> ForgotPassword(ForgotPasswordDto request);
+    Task<ApiResult<string?>> VerifyForgotPassword(VerifyForgotPasswordDto request);
 }

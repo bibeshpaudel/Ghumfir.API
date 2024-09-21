@@ -68,6 +68,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
         services.AddScoped<IValidator<ChangePasswordDto>, ChangePasswordDtoValidator>();
         services.AddScoped<IValidator<RefreshTokenDto>, RefreshTokenDtoValidator>();
+        services.AddScoped<IValidator<ForgotPasswordDto>, ForgotPasswordDtoValidator>();
+        services.AddScoped<IValidator<VerifyForgotPasswordDto>, VerifyForgotPasswordDtoValidator>();
 
         services.AddHttpContextAccessor();
         services.AddScoped<IUserAccessor, UserAccessor>();
