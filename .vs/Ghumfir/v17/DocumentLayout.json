@@ -118,7 +118,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
@@ -131,21 +131,7 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAACkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-20T19:34:18.221Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Roles.cs",
-              "DocumentMoniker": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Domain\\Constants\\Roles.cs",
-              "RelativeDocumentMoniker": "Ghumfir.Domain\\Constants\\Roles.cs",
-              "ToolTip": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Domain\\Constants\\Roles.cs",
-              "RelativeToolTip": "Ghumfir.Domain\\Constants\\Roles.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-20T20:05:48.053Z",
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -157,8 +143,7 @@
               "RelativeToolTip": "Ghumfir.Application\\Validators\\UserDTO\\ChangePasswordDtoValidator.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-20T20:01:00.903Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-20T20:01:00.903Z"
             },
             {
               "$type": "Document",
@@ -170,8 +155,7 @@
               "RelativeToolTip": "Ghumfir.Application\\DTOs\\UserDTO\\ChangePasswordDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-20T19:58:32.84Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-20T19:58:32.84Z"
             },
             {
               "$type": "Document",
@@ -183,21 +167,7 @@
               "RelativeToolTip": "Ghumfir.Application\\DTOs\\UserDTO\\LoginDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-20T19:30:43.242Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "RegisterDtoValidator.cs",
-              "DocumentMoniker": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Application\\Validators\\UserDTO\\RegisterDtoValidator.cs",
-              "RelativeDocumentMoniker": "Ghumfir.Application\\Validators\\UserDTO\\RegisterDtoValidator.cs",
-              "ToolTip": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Application\\Validators\\UserDTO\\RegisterDtoValidator.cs",
-              "RelativeToolTip": "Ghumfir.Application\\Validators\\UserDTO\\RegisterDtoValidator.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAABEAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-20T16:07:41.02Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-20T19:30:43.242Z"
             },
             {
               "$type": "Document",
@@ -214,6 +184,30 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Roles.cs",
+              "DocumentMoniker": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Domain\\Constants\\Roles.cs",
+              "RelativeDocumentMoniker": "Ghumfir.Domain\\Constants\\Roles.cs",
+              "ToolTip": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Domain\\Constants\\Roles.cs",
+              "RelativeToolTip": "Ghumfir.Domain\\Constants\\Roles.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-20T20:05:48.053Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RegisterDtoValidator.cs",
+              "DocumentMoniker": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Application\\Validators\\UserDTO\\RegisterDtoValidator.cs",
+              "RelativeDocumentMoniker": "Ghumfir.Application\\Validators\\UserDTO\\RegisterDtoValidator.cs",
+              "ToolTip": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Application\\Validators\\UserDTO\\RegisterDtoValidator.cs",
+              "RelativeToolTip": "Ghumfir.Application\\Validators\\UserDTO\\RegisterDtoValidator.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABEAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-20T16:07:41.02Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
               "Title": "ServiceCollectionExtensions.cs",
               "DocumentMoniker": "C:\\Users\\adef6\\Desktop\\Bibesh\\Ghumfir\\Ghumfir.Infrastructure\\Extensions\\ServiceCollectionExtensions.cs",
@@ -222,8 +216,7 @@
               "RelativeToolTip": "Ghumfir.Infrastructure\\Extensions\\ServiceCollectionExtensions.cs",
               "ViewState": "AQIAADYAAAAAAAAAAAApwEgAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-28T16:15:44.666Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-28T16:15:44.666Z"
             },
             {
               "$type": "Document",
@@ -235,8 +228,7 @@
               "RelativeToolTip": "Ghumfir.Infrastructure\\Repositary\\UserRepositary\\UserRepositary.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAqwBMAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-09T19:27:47.533Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T19:27:47.533Z"
             },
             {
               "$type": "Document",
@@ -248,8 +240,7 @@
               "RelativeToolTip": "Ghumfir.Application\\Contracts\\IUser.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-20T20:11:57.512Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-20T20:11:57.512Z"
             },
             {
               "$type": "Document",
@@ -261,8 +252,7 @@
               "RelativeToolTip": "Ghumfir.Application\\Validators\\UserDTO\\RefreshTokenDtoValidator.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-20T19:48:02.132Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-20T19:48:02.132Z"
             },
             {
               "$type": "Document",
@@ -274,8 +264,7 @@
               "RelativeToolTip": "Ghumfir.Application\\Validators\\UserDTO\\LoginDtoValidator.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAAABIAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-20T19:47:41.54Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-20T19:47:41.54Z"
             },
             {
               "$type": "Document",
@@ -287,8 +276,7 @@
               "RelativeToolTip": "Ghumfir.Application\\DTOs\\UserDTO\\RegisterUserDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-20T19:20:33.294Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-20T19:20:33.294Z"
             },
             {
               "$type": "Document",
@@ -300,8 +288,7 @@
               "RelativeToolTip": "Ghumfir.Application\\DTOs\\UserDTO\\RefreshTokenDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-20T19:30:58.498Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-20T19:30:58.498Z"
             },
             {
               "$type": "Document",

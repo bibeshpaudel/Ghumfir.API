@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ghumfir.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9a46deb3001201a6610cf37aae1dea1ce1a7879")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ghumfir.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ghumfir.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
