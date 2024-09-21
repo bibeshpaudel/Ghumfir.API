@@ -76,9 +76,29 @@ public class UserController(IUser user, IValidator<RegisterUserDto> registerVali
         return Ok(result);
     }
 
-    [Authorize(Roles = $"{Roles.Admin}, {Roles.Customer}")]
+    [Authorize]
     [HttpPost("change-password")]
-    public async Task<ActionResult<string?>> ChnagePassword(ChangePasswordDto request)
+    public async Task<ActionResult<string?>> ChangePassword(ChangePasswordDto request)
+    {
+        var validationResult = await _changePwdValidator.ValidateAsync(request);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
+
+            return BadRequest(new
+            {
+                Success = false,
+                Errors = errors
+            });
+        }
+
+        var result = await _user.ChangePassword(request);
+        return Ok(result);
+    }
+    
+    [Authorize(Roles = $"{Roles.Admin}, {Roles.Customer}")]
+    [HttpPost("forgot-password")]
+    public async Task<ActionResult<string?>> ForgotPassword(ChangePasswordDto request)
     {
         var validationResult = await _changePwdValidator.ValidateAsync(request);
         if (!validationResult.IsValid)
