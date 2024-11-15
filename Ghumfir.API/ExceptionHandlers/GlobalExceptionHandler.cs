@@ -4,29 +4,36 @@ using Microsoft.AspNetCore.Diagnostics;
 
 namespace Ghumfir.API.ExceptionHandlers;
 
-public class GlobalExceptionHandler : IExceptionHandler
+public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
 {
-    private readonly ILogger<GlobalExceptionHandler> _logger;
-
-    public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
+    public async ValueTask<bool> TryHandleAsync(
+        HttpContext httpContext,
+        Exception exception,
+        CancellationToken cancellationToken)
     {
-        _logger = logger;
-    }
+        logger.LogError(exception, "An unhandled exception occurred");
 
-    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
-    {
-        httpContext.Response.ContentType = "application/json";
-        httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-        
-        _logger.LogError($"Something went wrong: {exception}");
-        
-        var message = exception switch
+        var (statusCode, errorMessage) = exception switch
         {
-            NotImplementedException => "Method not implemented",
-                _ => "An unexpected error occurred."
+            ApplicationException appEx => (StatusCodes.Status400BadRequest, appEx.Message),
+            KeyNotFoundException => (StatusCodes.Status404NotFound, "The requested resource was not found."),
+            NotImplementedException => (StatusCodes.Status404NotFound, "The requested resource was not found."),
+            UnauthorizedAccessException _ => (StatusCodes.Status401Unauthorized, "Unauthorized."),
+            _ => (StatusCodes.Status500InternalServerError, "An internal server error occurred.")
         };
+
+        httpContext.Response.StatusCode = statusCode;
         
-        await httpContext.Response.WriteAsync(message, cancellationToken);
+        var response = new
+        {
+            error = new 
+            {
+                message = errorMessage,
+                type = exception.GetType().Name
+            }
+        };
+
+        await httpContext.Response.WriteAsJsonAsync(response, cancellationToken);
 
         return true;
     }

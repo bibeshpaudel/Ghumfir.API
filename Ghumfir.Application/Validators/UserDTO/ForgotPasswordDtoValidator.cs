@@ -23,7 +23,7 @@ public class VerifyForgotPasswordDtoValidator : AbstractValidator<VerifyForgotPa
         
         RuleFor(x => x.Code)
             .NotEmpty().WithMessage("Code is required.")
-            .When(x => x.Code.ToString().Length.Equals(6)).WithMessage("Code must be 6 characters long.");
+            .When(x => x.Code.ToString().Length != 6).WithMessage("Code must be 6 characters long.");
 
         RuleFor(x => x.NewPassword)
             .NotEmpty().WithMessage("New Password is required.")

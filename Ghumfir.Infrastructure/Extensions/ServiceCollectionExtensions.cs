@@ -53,12 +53,11 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddDbContextService(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("GhumfirDb");
         services.AddDbContext<GhumfirDbContext>(
-            options => options.UseNpgsql(connectionString,
+            options => options.UseNpgsql(configuration.GetConnectionString("GhumfirDb"),
                 b => b.MigrationsAssembly(typeof(ServiceCollectionExtensions).Assembly.FullName)),
             ServiceLifetime.Scoped);
-        
+
         return services;
     }
     

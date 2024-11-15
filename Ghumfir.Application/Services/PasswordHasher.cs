@@ -8,7 +8,7 @@ public class PasswordHasher
     private const int SaltSize = 16;
     private const int HashSize = 32;
 
-    public static string HashPassword(string password)
+    public static string HashPassword(string? password)
     {
         var salt = new byte[SaltSize];
         using (var rng = new RNGCryptoServiceProvider())
@@ -26,7 +26,7 @@ public class PasswordHasher
         return Convert.ToBase64String(hashBytesWithSalt);
     }
 
-    public static bool VerifyPassword(string password, string hashedPassword)
+    public static bool VerifyPassword(string? password, string hashedPassword)
     {
         var hashBytesWithSalt = Convert.FromBase64String(hashedPassword);
         var salt = new byte[SaltSize];
