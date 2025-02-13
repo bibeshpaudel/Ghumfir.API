@@ -1,6 +1,6 @@
 ﻿namespace Ghumfir.Domain.Constants.Enums;
 
-public enum VerificationCodePurposeEnum
+public enum MessageDeliveryPurposeEnum
 {
     ForgotPassword,
     MobileVerification,

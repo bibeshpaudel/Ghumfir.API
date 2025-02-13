@@ -13,6 +13,7 @@ using Ghumfir.Infrastructure.Repositary.UserRepositary;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Ghumfir.Application.Validators.UserDTO;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Ghumfir.Infrastructure.Extensions;
 
@@ -60,6 +61,9 @@ public static class ServiceCollectionExtensions
             options => options.UseNpgsql(configuration.GetConnectionString("GhumfirDb"),
                 b => b.MigrationsAssembly(typeof(ServiceCollectionExtensions).Assembly.FullName)),
             ServiceLifetime.Scoped);
+
+        services.AddHealthChecks()
+            .AddDbContextCheck<GhumfirDbContext>("Database", HealthStatus.Unhealthy, tags: ["db", "postgres"]);
 
         return services;
     }

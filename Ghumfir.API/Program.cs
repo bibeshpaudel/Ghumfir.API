@@ -1,14 +1,18 @@
+using System.Text.Json;
 using Ghumfir.API.ExceptionHandlers;
 using Ghumfir.Infrastructure.Extensions;
 using Ghumfir.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c => {
+builder.Services.AddSwaggerGen(c =>
+{
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "Ghumfir",
@@ -21,17 +25,21 @@ builder.Services.AddSwaggerGen(c => {
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer aehkoovvopycx\"",
+        Description =
+            "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer aehkoovvopycx\"",
     });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
         {
-            new OpenApiSecurityScheme {
-                Reference = new OpenApiReference {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
                     Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
+                    Id = "Bearer"
                 }
             },
-            new string[] {}
+            new string[] { }
         }
     });
 });
@@ -43,10 +51,38 @@ builder.Services.AddControllers();
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
+builder.Services.AddHealthChecks().AddCheck("Api", () => HealthCheckResult.Healthy("API is functioning as expected."), tags: ["api"]);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
+
+app.MapHealthChecks("/health", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = async (context, report) =>
+    {
+        context.Response.ContentType = "application/json";
+        var result = JsonSerializer.Serialize(new
+        {
+            status = report.Status.ToString(),
+            results = report.Entries.Select(e => new
+            {
+                key = e.Key,
+                value = new
+                {
+                    status = e.Value.Status.ToString(),
+                    description = e.Value.Description,
+                    duration = e.Value.Duration,
+                    data = e.Value.Data,
+                    exception = e.Value.Exception
+                }
+            }).ToDictionary(e => e.key, e => e.value)
+        });
+        await context.Response.WriteAsync(result);
+    }
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -65,6 +101,7 @@ app.UseSwaggerUI(options =>
         var url = $"/swagger/{description.GroupName}/swagger.json";
         options.SwaggerEndpoint(url, name);
     }
+
     options.RoutePrefix = string.Empty;
     options.DocumentTitle = "Ghumfir";
 });
