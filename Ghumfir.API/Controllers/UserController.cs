@@ -5,25 +5,26 @@ using Ghumfir.Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Asp.Versioning;
 
 namespace Ghumfir.API.Controllers;
-
-[Route("api/v1/[controller]")]
+[ApiVersion(1)]
+[Route("api/v{apiVersion:apiVersion}/[controller]")]
 [ApiController]
-public class UserController(IUser user, IValidator<RegisterUserDto> registerValidator, IValidator<LoginDto> loginValidator, IValidator<RefreshTokenDto> refreshValidator, IValidator<ChangePasswordDto> changePwdValidator, IValidator<ForgotPasswordDto> forgotPwdValidator, IValidator<VerifyForgotPasswordDto> verifyForgotPwdValidator, IUserAccessor userAccessor) : ControllerBase
+public class UserController(
+    IUser user,
+    IValidator<RegisterUserDto> registerValidator,
+    IValidator<LoginDto> loginValidator,
+    IValidator<RefreshTokenDto> refreshValidator,
+    IValidator<ChangePasswordDto> changePwdValidator,
+    IValidator<ForgotPasswordDto> forgotPwdValidator,
+    IValidator<VerifyForgotPasswordDto> verifyForgotPwdValidator,
+    IUserAccessor userAccessor) : ControllerBase
 {
-    private readonly IUser _user = user;
-    private readonly IValidator<RegisterUserDto> _registerValidator = registerValidator;
-    private readonly IValidator<LoginDto> _loginValidator = loginValidator;
-    private readonly IValidator<ChangePasswordDto> _changePwdValidator = changePwdValidator;
-    private readonly IValidator<ForgotPasswordDto> _forgotPwdValidator = forgotPwdValidator;
-    private readonly IValidator<VerifyForgotPasswordDto> _verifyForgotPwdValidator = verifyForgotPwdValidator;
-    private readonly IUserAccessor _userAccessor = userAccessor;
-
     [HttpPost("login")]
     public async Task<IActionResult> LoginUser([FromBody] LoginDto request)
     {
-        var validationResult = await _loginValidator.ValidateAsync(request);
+        var validationResult = await loginValidator.ValidateAsync(request);
         if (!validationResult.IsValid)
         {
             var errors = validationResult.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
@@ -35,14 +36,14 @@ public class UserController(IUser user, IValidator<RegisterUserDto> registerVali
             });
         }
 
-        var result = await _user.LoginUser(request);
+        var result = await user.LoginUser(request);
         return Ok(result);
     }
 
     [HttpPost("register")]
     public async Task<ActionResult<string?>> RegisterUser([FromBody] RegisterUserDto request)
     {
-        var validationResult = await _registerValidator.ValidateAsync(request);
+        var validationResult = await registerValidator.ValidateAsync(request);
         if (!validationResult.IsValid)
         {
             var errors = validationResult.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
@@ -54,7 +55,7 @@ public class UserController(IUser user, IValidator<RegisterUserDto> registerVali
             });
         }
 
-        var result = await _user.RegisterUser(request);
+        var result = await user.RegisterUser(request);
         return Ok(result);
     }
 
@@ -73,7 +74,7 @@ public class UserController(IUser user, IValidator<RegisterUserDto> registerVali
             });
         }
 
-        var result = await _user.RefreshToken(request);
+        var result = await user.RefreshToken(request);
         return Ok(result);
     }
 
@@ -81,7 +82,7 @@ public class UserController(IUser user, IValidator<RegisterUserDto> registerVali
     [HttpPost("change-password")]
     public async Task<ActionResult<string?>> ChangePassword([FromBody] ChangePasswordDto request)
     {
-        var validationResult = await _changePwdValidator.ValidateAsync(request);
+        var validationResult = await changePwdValidator.ValidateAsync(request);
         if (!validationResult.IsValid)
         {
             var errors = validationResult.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
@@ -93,14 +94,14 @@ public class UserController(IUser user, IValidator<RegisterUserDto> registerVali
             });
         }
 
-        var result = await _user.ChangePassword(request);
+        var result = await user.ChangePassword(request);
         return Ok(result);
     }
-    
+
     [HttpPost("forgot-password")]
     public async Task<ActionResult<ForgotPasswordResponse>> ForgotPassword([FromBody] ForgotPasswordDto request)
     {
-        var validationResult = await _forgotPwdValidator.ValidateAsync(request);
+        var validationResult = await forgotPwdValidator.ValidateAsync(request);
         if (!validationResult.IsValid)
         {
             var errors = validationResult.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
@@ -111,15 +112,15 @@ public class UserController(IUser user, IValidator<RegisterUserDto> registerVali
                 Errors = errors
             });
         }
-        
-        var result = await _user.ForgotPassword(request);
+
+        var result = await user.ForgotPassword(request);
         return Ok(result);
     }
-    
+
     [HttpPost("verify-forgot-password")]
     public async Task<ActionResult<string?>> VerifyForgotPassword([FromBody] VerifyForgotPasswordDto request)
     {
-        var validationResult = await _verifyForgotPwdValidator.ValidateAsync(request);
+        var validationResult = await verifyForgotPwdValidator.ValidateAsync(request);
         if (!validationResult.IsValid)
         {
             var errors = validationResult.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
@@ -130,8 +131,8 @@ public class UserController(IUser user, IValidator<RegisterUserDto> registerVali
                 Errors = errors
             });
         }
-        
-        var result = await _user.VerifyForgotPassword(request);
+
+        var result = await user.VerifyForgotPassword(request);
         return Ok(result);
     }
 
@@ -139,6 +140,7 @@ public class UserController(IUser user, IValidator<RegisterUserDto> registerVali
     [HttpPost("test")]
     public Task<ActionResult<string?>> Test()
     {
-        return Task.FromResult<ActionResult<string?>>(Ok($"{_userAccessor.GetMobile()}, {_userAccessor.GetUserId()}, {_userAccessor.GetFullname()}"));
+        return Task.FromResult<ActionResult<string?>>(
+            Ok($"{userAccessor.GetMobile()}, {userAccessor.GetUserId()}, {userAccessor.GetFullname()}"));
     }
 }

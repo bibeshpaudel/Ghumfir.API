@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
+using Asp.Versioning;
 using FluentValidation;
 using Ghumfir.API.Models.AppSettingsModel;
 using Ghumfir.Application.Contracts;
@@ -19,8 +20,9 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddVersioningService();
         services.AddDbContextService(configuration);
-        
+
         var tokenSettings = configuration.GetSection("TokenSettings").Get<TokenSettingModel>();
         var jwtSettings = configuration.GetSection("Jwt").Get<JwtSettingModel>();
 
@@ -51,7 +53,8 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    private static IServiceCollection AddDbContextService(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddDbContextService(this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddDbContext<GhumfirDbContext>(
             options => options.UseNpgsql(configuration.GetConnectionString("GhumfirDb"),
@@ -60,7 +63,7 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
-    
+
     private static IServiceCollection AddServiceConfiguration(this IServiceCollection services)
     {
         services.AddScoped<IValidator<RegisterUserDto>, RegisterDtoValidator>();
@@ -73,7 +76,25 @@ public static class ServiceCollectionExtensions
         services.AddHttpContextAccessor();
         services.AddScoped<IUserAccessor, UserAccessor>();
         services.AddScoped<IUser, UserRepositary>();
-        
+
         return services;
     }
+
+    private static IServiceCollection AddVersioningService(this IServiceCollection services)
+    {
+        services.AddApiVersioning(o =>
+        {
+            o.ReportApiVersions = true;
+            o.AssumeDefaultVersionWhenUnspecified = true;
+            o.DefaultApiVersion = new ApiVersion(1);
+            o.ApiVersionReader = new UrlSegmentApiVersionReader();
+        }).AddMvc().AddApiExplorer(x =>
+        {
+            x.GroupNameFormat = "'v'V";
+            x.SubstituteApiVersionInUrl = true;
+        });
+
+        return services;
+    }
+
 }

@@ -9,7 +9,7 @@ public class VerificationCodesConfiguration : IEntityTypeConfiguration<Verificat
     public void Configure(EntityTypeBuilder<VerificationCode> builder)
     {
         builder.HasKey(e => e.Id);
-        builder.Property(e => e.Code)
+        builder.Property(e => e.Code) 
             .IsRequired()
             .HasMaxLength(6); 
         builder.Property(e => e.Type)

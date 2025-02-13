@@ -58,8 +58,14 @@ app.MapControllers();
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-    options.RoutePrefix = string.Empty;  // This makes Swagger UI available at the root.
+    var descriptions = app.DescribeApiVersions();
+    foreach (var description in descriptions)
+    {
+        var name = description.GroupName.ToUpperInvariant();
+        var url = $"/swagger/{description.GroupName}/swagger.json";
+        options.SwaggerEndpoint(url, name);
+    }
+    options.RoutePrefix = string.Empty;
     options.DocumentTitle = "Ghumfir";
 });
 

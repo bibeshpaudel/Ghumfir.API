@@ -29,5 +29,6 @@ namespace Ghumfir.Domain.Entities
 
         public string? ApprovedBy { get; set; }
         public DateTime? ApprovedDate { get; set; }
+        public bool ForceChangePassword { get; set; }
     }
 }
