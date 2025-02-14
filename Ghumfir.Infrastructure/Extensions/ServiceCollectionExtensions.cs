@@ -80,6 +80,7 @@ public static class ServiceCollectionExtensions
         services.AddHttpContextAccessor();
         services.AddScoped<IUserAccessor, UserAccessor>();
         services.AddScoped<IUser, UserRepositary>();
+        services.AddScoped<TokenProvider>();
 
         return services;
     }

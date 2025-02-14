@@ -1,27 +1,19 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using Ghumfir.API.Models.AppSettingsModel;
-using Ghumfir.Application.Contracts;
+﻿using Ghumfir.Application.Contracts;
 using Ghumfir.Application.DTOs;
 using Ghumfir.Application.DTOs.UserDTO;
 using Ghumfir.Application.Services;
 using Ghumfir.Domain.Entities;
 using Ghumfir.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Ghumfir.Infrastructure.Repositary.UserRepositary;
 
-public class UserRepositary(
-    GhumfirDbContext dbContext,
-    JwtSettingModel jwtSetting,
-    TokenSettingModel tokenSetting,
-    IUserAccessor userAccessor)
-    : IUser
+public class UserRepositary(GhumfirDbContext dbContext, IUserAccessor userAccessor, TokenProvider tokenProvider) : IUser
 {
+    private readonly GhumfirDbContext dbContext = dbContext;
+    private readonly IUserAccessor userAccessor = userAccessor;
+    private readonly TokenProvider tokenProvider = tokenProvider;
+
     public async Task<ApiResult<string?>> RegisterUser(RegisterUserDto request)
     {
         var getUser = await dbContext.ApplicationUsers.FirstOrDefaultAsync(u => u.Mobile == request.Mobile);
@@ -64,8 +56,8 @@ public class UserRepositary(
             return ApiResponse<LoginResponse>.Failed("Invalid Mobile or Password");
         }
 
-        var accessToken = GenerateJwtToken(getUser, out var accessTokenExp);
-        var refreshToken = GenerateRefreshToken(out var refreshTokenExp);
+        var accessToken = tokenProvider.GenerateAccessToken(getUser, out var accessTokenExp);
+        var refreshToken = tokenProvider.GenerateRefreshToken(out var refreshTokenExp);
 
         if (string.IsNullOrEmpty(accessToken) || string.IsNullOrEmpty(refreshToken))
         {
@@ -107,27 +99,24 @@ public class UserRepositary(
 
     public async Task<ApiResult<LoginResponse>> RefreshToken(RefreshTokenDto request)
     {
-        var principal = GetTokenPrincipal(request.AccessToken);
-        if (principal == null)
-            return ApiResponse<LoginResponse>.Failed("Invalid Token");
-
-        var userId = principal?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-        if (string.IsNullOrEmpty(userId))
-            return ApiResponse<LoginResponse>.Failed("User not found");
-
         var refreshToken = await dbContext.RefreshTokens
-            .Where(rt => rt.Token == request.RefreshToken && rt.UserId.ToString() == userId)
+            .Where(rt => rt.Token == request.RefreshToken)
             .FirstOrDefaultAsync();
 
-        var getUser = await dbContext.ApplicationUsers.FirstOrDefaultAsync(u => u.Id.ToString() == userId);
-
-        if (getUser is null || refreshToken == null || refreshToken.ExpiresAt <= DateTime.UtcNow)
+        if (refreshToken == null || refreshToken.ExpiresAt <= DateTime.UtcNow)
         {
             return ApiResponse<LoginResponse>.Failed("Invalid Token");
         }
 
-        var newJwtToken = GenerateJwtToken(getUser, out var accessTokenExp);
-        var newRefreshToken = GenerateRefreshToken(out var refreshTokenExp);
+        var getUser = await dbContext.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == refreshToken.UserId);
+
+        if (getUser == null)
+        {
+            return ApiResponse<LoginResponse>.Failed("Invalid Token");
+        }
+
+        var newJwtToken = tokenProvider.GenerateAccessToken(getUser, out var accessTokenExp);
+        var newRefreshToken = tokenProvider.GenerateRefreshToken(out var refreshTokenExp);
 
         if (string.IsNullOrEmpty(newJwtToken) || string.IsNullOrEmpty(newRefreshToken))
         {
@@ -182,62 +171,5 @@ public class UserRepositary(
     public Task<ApiResult<string?>> VerifyForgotPassword(VerifyForgotPasswordDto request)
     {
         throw new NotImplementedException();
-    }
-
-    private ClaimsPrincipal? GetTokenPrincipal(string token)
-    {
-        var validation = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateIssuerSigningKey = true,
-            ValidateLifetime = true,
-            ValidIssuer = jwtSetting.Issuer,
-            ValidAudience = jwtSetting.Audience,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSetting.Key))
-        };
-
-        return new JwtSecurityTokenHandler().ValidateToken(token, validation, out _);
-    }
-
-    private string? GenerateRefreshToken(out DateTime expirationDate)
-    {
-        var randomNumber = new byte[64];
-
-        using (var numberGenerator = RandomNumberGenerator.Create())
-        {
-            numberGenerator.GetBytes(randomNumber);
-        }
-
-        expirationDate = DateTime.UtcNow.AddMinutes(tokenSetting.RefreshTokenExpirationInDays);
-
-        return Convert.ToBase64String(randomNumber);
-    }
-
-    private string? GenerateJwtToken(ApplicationUser user, out DateTime expirationDate)
-    {
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSetting.Key));
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-        var userClaims = new[]
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.MobilePhone, user.Mobile),
-            new Claim(ClaimTypes.Name, user.FullName),
-            new Claim(ClaimTypes.Role, user.Role),
-            new Claim("IsActive", user.IsActive.ToString()),
-            new Claim("IsApproved", (!string.IsNullOrEmpty(user.ApprovedBy)).ToString())
-        };
-
-        expirationDate = DateTime.UtcNow.AddMinutes(tokenSetting.AccessTokenExpirationInMinutes);
-
-        var token = new JwtSecurityToken(
-            issuer: jwtSetting.Issuer,
-            audience: jwtSetting.Audience,
-            claims: userClaims,
-            expires: expirationDate,
-            signingCredentials: credentials
-        );
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
