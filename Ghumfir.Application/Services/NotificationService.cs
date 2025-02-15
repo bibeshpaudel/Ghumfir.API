@@ -1,4 +1,4 @@
-﻿using Ghumfir.Application.Contracts;
+﻿using Ghumfir.Application.Contracts.Notification;
 
 namespace Ghumfir.Application.Services;
 

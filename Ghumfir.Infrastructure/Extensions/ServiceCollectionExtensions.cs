@@ -7,12 +7,14 @@ using Asp.Versioning;
 using FluentValidation;
 using Ghumfir.API.Models.AppSettingsModel;
 using Ghumfir.Application.Contracts;
+using Ghumfir.Application.Contracts.Authentication;
 using Ghumfir.Application.DTOs.UserDTO;
 using Ghumfir.Infrastructure.Accessors;
 using Ghumfir.Infrastructure.Repositary.UserRepositary;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Ghumfir.Application.Validators.UserDTO;
+using Ghumfir.Infrastructure.Services;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Ghumfir.Infrastructure.Extensions;
@@ -30,6 +32,15 @@ public static class ServiceCollectionExtensions
         services.AddSingleton(tokenSettings);
         services.AddSingleton(jwtSettings);
 
+        services.AddAuthenticationServiceCollection(jwtSettings!);
+
+        services.AddServiceConfiguration();
+
+        return services;
+    }
+    
+    private static IServiceCollection AddAuthenticationServiceCollection(this IServiceCollection services, JwtSettingModel jwtSettings)
+    {
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -48,8 +59,6 @@ public static class ServiceCollectionExtensions
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings!.Key))
             };
         });
-
-        services.AddServiceConfiguration();
 
         return services;
     }
@@ -80,7 +89,8 @@ public static class ServiceCollectionExtensions
         services.AddHttpContextAccessor();
         services.AddScoped<IUserAccessor, UserAccessor>();
         services.AddScoped<IUser, UserRepositary>();
-        services.AddScoped<TokenProvider>();
+        services.AddScoped<ITokenProvider ,TokenProvider>();
+        services.AddScoped<IPasswordHasher ,PassworHasher>();
 
         return services;
     }

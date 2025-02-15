@@ -1,14 +1,15 @@
 ﻿using System.Security.Cryptography;
+using Ghumfir.Application.Contracts.Authentication;
 
-namespace Ghumfir.Application.Services;
+namespace Ghumfir.Infrastructure.Services;
 
-public class PasswordHasher
+public class PassworHasher : IPasswordHasher
 {
     private const int Iterations = 10000;
     private const int SaltSize = 16;
     private const int HashSize = 32;
 
-    public static string HashPassword(string? password)
+    public string HashPassword(string? password)
     {
         var salt = new byte[SaltSize];
         using (var rng = new RNGCryptoServiceProvider())
@@ -26,7 +27,7 @@ public class PasswordHasher
         return Convert.ToBase64String(hashBytesWithSalt);
     }
 
-    public static bool VerifyPassword(string? password, string hashedPassword)
+    public bool VerifyPassword(string? password, string hashedPassword)
     {
         var hashBytesWithSalt = Convert.FromBase64String(hashedPassword);
         var salt = new byte[SaltSize];

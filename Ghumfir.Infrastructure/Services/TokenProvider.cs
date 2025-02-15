@@ -1,17 +1,16 @@
-﻿using Ghumfir.API.Models.AppSettingsModel;
-using Ghumfir.Domain.Entities;
+﻿using Ghumfir.Domain.Entities;
+using Ghumfir.API.Models.AppSettingsModel;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Ghumfir.Application.Contracts;
+using Ghumfir.Application.Contracts.Authentication;
 
-namespace Ghumfir.Infrastructure.Repositary.UserRepositary
+namespace Ghumfir.Infrastructure.Services
 {
-    public class TokenProvider(
-        JwtSettingModel jwtSetting,
-        TokenSettingModel tokenSetting
-        )
+    public class TokenProvider(JwtSettingModel jwtSetting, TokenSettingModel tokenSetting) : ITokenProvider
     {
         public string GenerateAccessToken(ApplicationUser user, out DateTime expirationDate)
         {

@@ -8,4 +8,5 @@ public interface IUserAccessor
     public string GetRole();
     public string GetFullname();
     public string GetUserId();
+    public string GetForceChangePassword();
 }

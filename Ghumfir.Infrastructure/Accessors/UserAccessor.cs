@@ -20,6 +20,11 @@ public class UserAccessor : IUserAccessor
         return User?.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 
+    public string GetForceChangePassword()
+    {
+        return User?.FindFirstValue("ForceChangePassword");
+    }
+
     public string GetFullname()
     {
         return User?.FindFirstValue(ClaimTypes.Name);

@@ -1,19 +1,15 @@
 ﻿using Ghumfir.Application.Contracts;
+using Ghumfir.Application.Contracts.Authentication;
 using Ghumfir.Application.DTOs;
 using Ghumfir.Application.DTOs.UserDTO;
-using Ghumfir.Application.Services;
 using Ghumfir.Domain.Entities;
 using Ghumfir.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ghumfir.Infrastructure.Repositary.UserRepositary;
 
-public class UserRepositary(GhumfirDbContext dbContext, IUserAccessor userAccessor, TokenProvider tokenProvider) : IUser
+public class UserRepositary(GhumfirDbContext dbContext, IUserAccessor userAccessor, IPasswordHasher passwordHasher,ITokenProvider tokenProvider) : IUser
 {
-    private readonly GhumfirDbContext dbContext = dbContext;
-    private readonly IUserAccessor userAccessor = userAccessor;
-    private readonly TokenProvider tokenProvider = tokenProvider;
-
     public async Task<ApiResult<string?>> RegisterUser(RegisterUserDto request)
     {
         var getUser = await dbContext.ApplicationUsers.FirstOrDefaultAsync(u => u.Mobile == request.Mobile);
@@ -22,7 +18,7 @@ public class UserRepositary(GhumfirDbContext dbContext, IUserAccessor userAccess
             return ApiResponse<string?>.Failed("User already exists", null);
         }
 
-        string hashedPassword = PasswordHasher.HashPassword(request.Password);
+        string hashedPassword = passwordHasher.HashPassword(request.Password);
 
         var user = dbContext.ApplicationUsers.Add(new ApplicationUser()
         {
@@ -50,7 +46,7 @@ public class UserRepositary(GhumfirDbContext dbContext, IUserAccessor userAccess
             return ApiResponse<LoginResponse>.Failed("Invalid Mobile or Password");
         }
 
-        bool checkPassword = PasswordHasher.VerifyPassword(request.Password, getUser.Password);
+        bool checkPassword = passwordHasher.VerifyPassword(request.Password, getUser.Password);
         if (!checkPassword)
         {
             return ApiResponse<LoginResponse>.Failed("Invalid Mobile or Password");
@@ -146,13 +142,13 @@ public class UserRepositary(GhumfirDbContext dbContext, IUserAccessor userAccess
             return ApiResponse<string?>.Failed("Invalid Mobile or Password");
         }
 
-        bool checkPassword = PasswordHasher.VerifyPassword(request.OldPassword, getUser.Password);
+        bool checkPassword = passwordHasher.VerifyPassword(request.OldPassword, getUser.Password);
         if (!checkPassword)
         {
             return ApiResponse<string?>.Failed("Invalid Mobile or Password");
         }
 
-        string hashedNewPassword = PasswordHasher.HashPassword(request.NewPassword);
+        string hashedNewPassword = passwordHasher.HashPassword(request.NewPassword);
 
         getUser.Password = hashedNewPassword;
 

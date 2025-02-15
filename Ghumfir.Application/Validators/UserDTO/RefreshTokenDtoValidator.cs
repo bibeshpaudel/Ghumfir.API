@@ -7,9 +7,6 @@ namespace Ghumfir.Application.Validators.UserDTO
     {
         public RefreshTokenDtoValidator()
         {
-            RuleFor(dto => dto.AccessToken)
-            .NotEmpty().WithMessage("Access token is required.");
-
             RuleFor(dto => dto.RefreshToken)
                 .NotEmpty().WithMessage("Refresh token is required.");
         }
